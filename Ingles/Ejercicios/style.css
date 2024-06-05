@@ -1,0 +1,21 @@
+input[type="text"] {
+    border: 2px solid #ccc; /* Color de borde inicial */
+    padding: 5px;
+}
+
+body{
+    background-color: #F3FEFF;
+}
+
+#boton_for {
+    width: 500px;
+    color: white;
+    border-color: white;
+    background-color: #65C8FF;
+}
+
+#miFormulario{
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 20%;
+}
