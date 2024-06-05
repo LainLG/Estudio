@@ -510,3 +510,413 @@ Existen dos formas de copiar diccionarios:
 >>> a
 {1:'A', 2:'B', 3:'C'}
 ```
+<h3>Funciones</h3>
+
+<h4>Funciones (def)</h4>
+
+Una función es un bloque de código que tiene asociado un nombre, de manera que cada vez que se quiera ejecutar el bloque de código basta con invocar el nombre de la función.
+
+Para declarar una función se utiliza la siguiente sintaxis:
+
+
+```python
+>>> def bienvenida():
+...
+print('¡Bienvenido a Python!')
+...
+return
+...
+>>> type(bienvenida)
+<class 'function'>
+>>> bienvenida()
+¡Bienvenido a Python!
+```
+
+<h5>Parametros de una funcion</h5>
+
+Una función puede recibir valores cuando se invoca a travez de unas variables conocidad como parámetros que se definen entre paréntesis en declaración de la función. En el cuerpo de la función se pueden usar estos parámetros como si fuesen variables.
+
+```python
+>>> def bienvenida(nombre):
+...
+print('¡Bienvenido a Python', nombre + '!')
+...
+return
+...
+>>> bienvenida('Alf')
+¡Bienvenido a Python Lain!
+```
+
+<h5>Argumentos de la llamada a una función</h5>
+
+Los valores que se pasan a la función en una llamada o invocación concreta de ella se conocen como argumentos y se asocian a los parámetros de la declaracion de la función.
+Los argumentos se puede indicar de dos formas:
+
+* **Argumentos posicionales**: Se asocian a los parámetros de la función en el mismo orden que aparecen en la definición de la función.
+* **Argumentos por nombre**: Se indica explícitamente el nombre del parámetro al que se asocia un argumento de la forma `parametro` = `argumento`.
+
+```python
+>>> def bienvenida(nombre, apellido):
+...
+print('¡Bienvenido a Python', nombre, apellido + '!')
+...
+return
+...
+>>> bienvenida('Alfredo', 'Sánchez)
+¡Bienvenido a Python Alfredo Sánchez!
+>>> bienvenida(apellido = 'Sánchez', nombre = 'Alfredo')
+¡Bienvenido a Python Alfredo Sánchez!
+```
+
+<h5>Retorno de una funcion</h5>
+
+Una función puede devolver un objeto de cualquier tipo tras su invocación. Para ello el objeto a devolver debe escribirse detras de la palabra reservada `return`. Si no se indica ningún objeto, la función no devolverá nada.
+
+```python
+>>> def area_triangulo(base, altura):
+...
+return base * altura / 2
+...
+>>> area_triangulo(2, 3)
+3
+>>> area_triangulo(4, 5)
+10
+```
+<h5>Argmentos por defecto</h5>
+
+En la definición de una función se puede asignar a cada parámetro un argumento por defecto, de manera que si se invoca la función sin proporcionar ningún argumento para ese parámetro, se utiliza el argumento por defecto.
+
+```python
+>>> def bienvenida(nombre, lenguaje = 'Python'):
+...
+print('¡Bienvenido a', lenguaje, nombre + '!')
+...
+return
+...
+>>> bienvenida('Lain')
+¡Bienvenido a Python Lain!
+>>> bienvenida('Lain', 'Java')
+¡Bienvenido a Java Lain!
+```
+
+<h5>Pasar un número indeterminado de argumentos</h5>
+
+Por último, es posible pasar un numero variable de argumentos a un parametro. Esto se puede hacer de dos formas.
+
+* *`Parametro`: Se antepone un asterisco al nombre del parametro y en la invocacion de la funcion se pasa al numero variable de argumentos separados por comas. Los argumentos se guardan en una lista que se asocia al parametro.
+* **`Parametro`: Se antepone dos asteriscos al nombre del parametro y en la invocacion de al funcian se pasa el numero variable de argumentos por pares `nombre` =  `valor`, separados por comas. Los argumentos se guardan en un dicionario que se asocia al parametro.
+
+```python
+>>> def menu(*platos):
+...
+print('Hoy tenemos: ', end='')
+...
+for plato in platos:
+...
+print(plato, end=', ')
+...
+return
+...
+>>> menu('pasta', 'pizza', 'ensalada')
+Hoy tenemos: pasta, pizza, ensalada,
+```
+
+<h5>Ambito de los parametros y variables de una funcion</h5>
+
+Los parametros y las variables declaradas dentro de una funcion son de **ambito local**, mientras que las definidas fuera de ella son de **ambito global.**
+
+Tanto los parametros como las variables del ambito local de una funcion solo estan accesibles durante la ejecucion de la funcion, es decir, cuando termina la ejecucion de la funcion esta variables desaparecen y no son accesibles desde fuera de la funcion.
+
+```python
+>>> def bienvenida(nombre):
+...
+lenguaje = 'Python'
+...
+print('¡Bienvenido a', lenguaje, nombre + '!')
+...
+return
+...
+>>> bienvenida('Alf')
+¡Bienvenido a Python Alf!
+>>> lenguaje
+Traceback (most recent call last):
+File "<stdin>", line 1, in <module>
+NameError: name 'lenguaje' is not defined
+```
+
+<h5>Ambito de los parametros y variables de una funcion</h5>
+
+Si en el ambito local de una funcion existe una variable que tambien existe en el ambito global, durante la ejecucion de la funcion la variable global queda eclipsada por la variable local y no es accesible hasta que finalize la ejecucion de la funcion.
+
+```python
+>>> lenguaje = 'Java'
+>>> def bienvenida():
+...
+lenguaje = 'Python'
+...
+print('¡Bienvenido a', lenguaje + '!')
+...
+return
+...
+>>> bienvenida()
+¡Bienvenido a Python!
+>>> print(lenguaje)
+Java
+```
+
+<h5> Paso de argumentos por referencia</h5>
+
+En Python el paso de argumentos a una funcion es siempre por referencia, es decir, se pasa una referencia al objeto del argumentos, de manera que cualquer cambioo que se haga dentro de la funcion mediante el parametro asociado afectara al objeto original, siempre y cuando este sea mutable.
+
+```python
+>>> primer_curso = ['Matemáticas', 'Física']
+>>> def añade_asignatura(curso, asignatura):
+...
+curso.append(asignatura)
+...
+return
+...
+>>> añade_asignatura(primer_curso, 'Química')
+>>> print(primer_curso)
+['Matemáticas', 'Física', 'Química']
+```
+
+<h5>Documentación de funciones</h5>
+
+Una practica muy recomendable cuando se define una funcion es escribir lo que la funcion hace en un comentario.
+
+En Python esto se hace con un **docstring** que es un tipo de compentario especial se hace en la linea siguiente al encabezado de la funcion entre tres comillas simples `' ' '` o doble `" " "`.
+Despues se puede haceder a la documentacion de la función con la función `help`(<`nombre-función`>).
+
+```python
+>>> def area_triangulo(base, altura):
+... """Función que calcula el área de un triángulo.
+...
+... Parámetros:
+...
+- base: La base del triángulo.
+...
+- altura: La altura del triángulo.
+... Resultado:
+...
+El área del triángulo con la base y altura especificadas.
+... """
+...
+return base * altura / 2
+...
+>>> help(area_triangulo)
+area_triangulo(base, altura)
+Función que calcula el área de un triángulo.
+Parámetros:
+- base: La base del triángulo.
+- altura: La altura del triángulo.
+Resultado:
+El área del triángulo con la base y altura especificadas.
+```
+
+<h4>Funcion recursivas</h4>
+
+Una funcion recursiva es una función que en su cuerpo contien una llamada a si misma.
+
+La recursion es una practica comun en la mayoria de lenguajes de porgramación ya que permite resolver las tareas recursivas de manera más natural.
+
+Para garantizar el final de una funcion recursiva, las sucesiva llamadas tiene que reducir el grado de complejidad del problema, hasta que este pueda resolver directamente sin necesidad de volver a llamar a la función.
+
+```python
+>>> def factorial(n):
+...
+if n == 0:
+...
+return 1
+...
+else:
+...
+return n * factorial(n-1)
+...
+>>> f(5)
+120
+```
+
+<h5>Funciones recursivas multiples</h5>
+
+Una funcion recursiva puede invocarse a si misma tantas veces como quiera en su cuerpo.
+
+
+```python
+>>> def fibonacci(n):
+...
+if n <= 1:
+...
+return n
+...
+else:
+...
+return fibonacci(n - 1) + fibonacci(n - 2)
+...
+>>> fibonacci(6)
+8
+```
+
+<h5>Los riesgos de la recursividad</h5>
+
+Aunque la recursión permite resolver las tareas recursivas de forma más natural, hay que tener cuidad con ella porque suele consumir bastante memoria, ya que cada llamada a la función crea un nuevo ámbito local con las variable sy los parámetros de la función.
+
+En muchos casos es más eficiente la tarea recursiva de forma iterativa usando bucles.
+
+```python
+>>> def fibonacci(n):
+...
+a, b = 0, 1
+...
+for i in range(n):
+...
+a, b = b, a + b
+...
+return a
+...
+>>> fibonacci(6)
+8
+```
+
+<h4>Programación funcional</h4>
+
+En **Python** las funciones son objetos de primera clase, es decir, que pueden pasarse como argumentos de una funcion, al igual que el resto de los tipos de datos.
+
+```python
+>>> def aplica(funcion, argumento):
+...
+return funcion(argumento)
+...
+>>> def cuadrado(n):
+...
+return n*n
+...
+>>> def cubo(n):
+...
+return n**3
+...
+>>> aplica(cuadrado, 5)
+25
+>>> aplica(cubo, 5)
+125
+```
+
+<h5>Funciones anónimas (lambda)</h5>
+
+Existen un tipo especial de funciones que no tienen nombre asociado y se conoces como **funciones anónimas** o **Funciones lamdba**.
+
+La sintaxis para definir una función anonima es:
+
+`lambda` <`Parametro`> : <`Expresion`>
+
+Esta funcion se suele asociar a una variable o prametro desde la que hacer la llamada.
+
+```python
+>>> area = lambda base, altura : base * altura
+>>> area(4, 5)
+10
+```
+
+<h5>Aplicar una función a todos los elementos de una colección iterable (map)</h5>
+
+`map`(`f`,`c`): Devuelve un objeto iterable con los resultados de aplicar la funcion `f` a los elementos de la coleccion `c`. Si la funcion `f` requiere `n` argumentos entonces deben pasarse `n` colecciones con los argumentos.
+Para convertir el objeto en una lista, tupla o diccionario hay que aplicar explicitamente las funciones `list`( ), `tuple`( ) o `dic`( ) respectivamente.
+
+```python
+>>> def cuadrado(n):
+...
+return n * n
+...
+>>> list(map(cuadrado, [1, 2, 3])
+[1, 4, 9]
+
+>>> def rectangulo(a, b):
+...
+return a * b
+...
+>>> tuple(map(rectangulo, (1, 2, 3), (4, 5, 6)))
+(4, 10, 18)
+```
+
+<h5>Filtrar los elementos de una colección iterable (filter)</h5>
+
+`filter`(`f`,`c`): Devuelve un objeto iterable con los elementos de al colección `c` que devuelven `True` al aplicarles la funcion `f`. Para convertir el objeto en una lista, tupla, o diccionario hay que aplicar explicitamente las funciones `list`( ) , `tuple`() , `dict`( ) respectivamente.
+
+`f` debe ser una función que reciba un argumento y devuelve un valor booleano.
+
+```python
+>>> def par(n):
+...
+return n % 2 == 0
+...
+>>> list(filter(par, range(10))
+[0, 2, 4, 6, 8]
+```
+
+<h5>Combinar los elementos de varias colecciones iterables (zip)</h5>
+
+`zip`(`c1`,`c2`, ...): Devuelve un objeto iterable cuyos elementos son tuplas formadas por los elementos que ocupan la misma posición en las colecciones `c1`,`c2`, etc. El número de elementos de las tuplas es el número de colecciones que se pasen. Para convertir el objeto en una lista, tupla o diccionario, hay que aplicar explicitamente las funciones  `list`( ) , `tuple`() , `dict`( ) respectivamente.
+
+
+```python
+>>> asignaturas = ['Matemáticas', 'Física', 'Química', 'Economía']
+>>> notas = [6.0, 3.5, 7.5, 8.0]
+>>> list(zip(asignaturas, notas))
+[('Matemáticas', 6.0), ('Física', 3.5), ('Química', 7.5), ('Economía',8.0)]
+>>> dict(zip(asignaturas, notas[:3]))
+{'Matemáticas': 6.0, 'Física': 3.5, 'Química': 7.5}
+```
+
+<h5>Operar todos los elementos de una colección iterable (reduce)</h5>
+
+
+`reduce`(`f`, `l`) : Aplicar la función `f` a los dos primeros elementos de la secuencia `l`. Con el valor obtenido vuelve a aplicar la función `f` a ese valor y el siguiente de la secuencia, y así hasta que no quedan más elementos en la lista. Devuelve el valor resultado de la última aplicación de la función `f`.
+La función reduce está definida en el módulo `functools`.
+
+```python
+>>> from functools import reduce
+>>> def producto(n, m):
+...
+return n * m
+...
+>>> reduce(producto, range(1, 5))
+24
+```
+
+<h4>Comprensión de colecciones</h4>
+
+En muchas aplicaciones es habitual aplicar una función o realizar una operación con los elementos de una colección (lista, tupla o diccionario) y obtener una nueva colección de elementos transformados. Aunque esto se puede hacer recorriendo la secuencia con un bucle iterativo, y en programación funcional mediante la función `map`, Python incorpora un mecanismo muy potente que permite esto mismo de manera más simple.
+
+<h5>Comprensión de listas</h5>
+
+`[`expresion `for` variable `in` lista `if` condicion`]`
+
+Esta instrucción genera la lista cuyos elementos son el resultado de evaluar la expresión *`expresion`*, para cada valor que toma la variable *`variable`*, donde variable toma todos los valores de la lista lista que cumplen la condición condición.
+
+```python
+>>> [x ** 2 for x in range(10)]
+[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+>>> [x for x in range(10) if x % 2 == 0]
+[0, 2, 4, 6, 8]
+>>> [x ** 2 for x in range(10) if x % 2 == 0]
+[0, 4, 16, 36, 64]
+>>> notas = {'Carmen':5, 'Antonio':4, 'Juan':8, 'Mónica':9, 'María': 6,
+'Pablo':3}
+>>> [nombre for (nombre, nota) in notas.items() if nota >= 5]
+['Carmen', 'Juan', 'Mónica', 'María']
+```
+
+<h5>Comprensión de diccionarios </h5>
+
+`{`*expresion‑clave*:*expresion‑valor* `for` *variables* `in` *lista* `if` *condicion*`}`
+
+Esta instrucción genera el diccionario formado por los pares cuyas claves son el resultado de evaluar la expresión `expresion‑clave` y cuyos valores son el resultado de evaluar la expresión `expresion‑valor`, para cada valor que toma la variable `variable`, donde `variable` toma todos los valores de la lista `lista` que cumplen la condición `condición`.
+
+```python
+>>> {palabra:len(palabra) for palabra in ['I', 'love', 'Python']}
+{'I': 1, 'love': 4, 'Python': 6}
+>>> notas = {'Carmen':5, 'Antonio':4, 'Juan':8, 'Mónica':9, 'María': 6,'Pablo':3}
+>>> {nombre: nota +1 for (nombre, nota) in notas.items() if nota >= 5])
+{'Carmen': 6, 'Juan': 9, 'Mónica': 10, 'María': 7}
+```
+
